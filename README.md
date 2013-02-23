@@ -72,3 +72,10 @@ TODO
 # concat multiple topics into 1 message
 # allow/disable reply notifications
 # clear out old topics using maxTopics (this may change to a date)
+
+
+Dependencies
+==================
+# redis
+
+NOTE I'll package up a JAR file with project dependancies such as JavaMail and Jedis once I get through the TODO list above
