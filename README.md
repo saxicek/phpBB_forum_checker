@@ -46,8 +46,8 @@ The config file is a JSON file as described below:
 	"addresses" : [
 		"<username>@gmail.com"
 	],
-        "subject": "New Forum Post : ",
-        "body": "<html><body><h1>hello world</h1></body></html>"
+        "subject": "New Forum Post {{title}}",
+        "body": "/path/to/mustache/file.mustache>"
     },
     "storage": {
         "redisKey": "forumTopics",
@@ -62,9 +62,24 @@ Note that dumpFileName is appended with ".html"
 PageId should be the pageID specified in the page's query string e.g. http://www.someForum.com/forum/viewforum.php?f=24 pageID would be 24
 (You SHOULD NOT need to specify viewforum.php in the baseURL)
 
+The body and subject attributes are rendered using mustache https://github.com/spullara/mustache.java
+Available tags :
+{{title}} = the thread's title
+{{url}} = the url to link to the thread (this should be placed inside the href attribute of an `<a>` tag)
+
+The body attribute may be specified as EITHER a file path to a mustache file OR raw mustache
+
+#### Example mustache file
+```html
+<html>
+	<body>
+	    <p>New Forum Post!</p>
+	    <p></p><a href="{{url}}">{{title}}</a></p>
+	</body>
+</html>
+```
 
 ### TODO
-* use mustache to render the body & subject
 * concat multiple topics into 1 message
 * allow/disable reply notifications
 * clear out old topics using maxTopics (this may change to a date)
