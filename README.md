@@ -74,3 +74,14 @@ PageId should be the pageID specified in the page's query string e.g. http://www
 * redis
 
 NOTE I'll package up a JAR file with project dependancies such as JavaMail and Jedis once I get through the TODO list above
+
+
+
+## Future Plans
+Plugins to do things like (these may/may not happen):
+
+* extract key details from the posts (who, where, contact number)
+* Check Google Calendar to check schedule for forums which relate to activites
+* Add to calendar if schedule free
+* Move alerts out into a plugin
+* Custom callbacks - shell scripts etc

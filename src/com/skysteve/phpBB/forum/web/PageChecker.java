@@ -111,9 +111,8 @@ public class PageChecker {
 		    			logger.info("Found new topic " + title);
 		    		}
 					
-					ForumMessage msg = new ForumMessage(config);
-					msg.setUrl(prefix + "viewtopic.php?t=" + topicID);
-					msg.setTitle(title);
+					String topicUrl = prefix + "viewtopic.php?t=" + topicID;
+					ForumMessage msg = new ForumMessage(config, topicUrl, title);
 					messages.add(msg);
 				}
 

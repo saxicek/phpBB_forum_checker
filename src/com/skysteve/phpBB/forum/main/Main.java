@@ -24,7 +24,7 @@ public class Main {
 	 * @throws MessagingException 
 	 * @throws FileNotFoundException 
 	 */
-	public static void main(String[] args) throws MessagingException, FileNotFoundException {
+	public static void main(String[] args) throws MessagingException, FileNotFoundException {	
 		Config config = new Config(args[0]);
 		StorageManager storageManager = new StorageManager(config);
 		
@@ -43,7 +43,11 @@ public class Main {
 				mail.sendMessage(messages.get(i));
 			}			
 			
+			System.out.println("Found " + messages.size() + " new topics. Sent " + max + " notificaitons to " + config.getMailTo().getAddresses() + " recipients - exiting");
+			System.exit(0);
 		}
+		
+		System.out.println("Found 0 new messages - exiting");
 		
 	}
 	
