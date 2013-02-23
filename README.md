@@ -1,6 +1,4 @@
-phpBB forum checker
-===================
-
+# phpBB forum checker
 A Simple Java based forum checker for phpBB (Tested on V2)
 
 Currently under development. It was created as a way to poll a forum Topic to check for new updates. (Rather than recieve emails for all topics)
@@ -8,13 +6,12 @@ Currently under development. It was created as a way to poll a forum Topic to ch
 It is designed to be run as a CRON task taking in a config file path as it's only argument. (See below for config file example)
 
 
-Config File
-==================
+### Config File
 NOTE parts of this config file don't actually do anything yet. These are
-# alerts:allType
-# alerts:replies
-# mailTo:body
-# storage:maxTopics
+* alerts:allType
+* alerts:replies
+* mailTo:body
+* storage:maxTopics
 
 The config file is a JSON file as described below:
 
@@ -66,16 +63,14 @@ PageId should be the pageID specified in the page's query string e.g. http://www
 (You SHOULD NOT need to specify viewforum.php in the baseURL)
 
 
-TODO
-==================
-# use mustache to render the body & subject
-# concat multiple topics into 1 message
-# allow/disable reply notifications
-# clear out old topics using maxTopics (this may change to a date)
+### TODO
+* use mustache to render the body & subject
+* concat multiple topics into 1 message
+* allow/disable reply notifications
+* clear out old topics using maxTopics (this may change to a date)
 
 
-Dependencies
-==================
-# redis
+### Dependencies
+* redis
 
 NOTE I'll package up a JAR file with project dependancies such as JavaMail and Jedis once I get through the TODO list above
