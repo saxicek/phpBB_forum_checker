@@ -41,6 +41,8 @@ public class StorageManager {
 	}
 	
 	public void storeTopic (Topic topic) {
+		//remove the topic ID 1st, otherwise we don't override
+		redisClient.zremrangeByScore(KEY, topic.getTopicId(), topic.getTopicId());
 		redisClient.zadd(KEY, topic.getTopicId(), topic.toJSON().toString());
 	}
 

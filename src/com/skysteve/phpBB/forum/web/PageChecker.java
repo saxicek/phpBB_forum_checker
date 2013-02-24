@@ -105,8 +105,6 @@ public class PageChecker {
 				
 				//if we don't already know about this topic, or there's a new reply
 				if (oldTopic == null || newTopic.getLastPost().compareTo(oldTopic.getLastPost()) != 0) {
-					storageManager.storeTopic(newTopic);
-					
 					if (config.getDebug().isActive()) {
 		    			logger.info("Found new topic " + title);
 		    		}
@@ -115,6 +113,8 @@ public class PageChecker {
 					ForumMessage msg = new ForumMessage(config, topicUrl, title);
 					messages.add(msg);
 				}
+				
+				storageManager.storeTopic(newTopic);
 
 				fw.write(line + "\n\r");
 			}

@@ -47,7 +47,7 @@ The config file is a JSON file as described below:
 		"<username>@gmail.com"
 	],
         "subject": "New Forum Post {{title}}",
-        "body": "/path/to/mustache/file.mustache>"
+        "body": "/path/to/mustache/file.mustache"
     },
     "storage": {
         "redisKey": "forumTopics",
@@ -83,6 +83,11 @@ The body attribute may be specified as EITHER a file path to a mustache file OR 
 * concat multiple topics into 1 message
 * allow/disable reply notifications
 * clear out old topics using maxTopics (this may change to a date)
+* ignore : {
+	users : ["user1", "user2"],
+	posts : [21,22,23],
+	stickyPosts : true
+}
 
 
 ### Dependencies
