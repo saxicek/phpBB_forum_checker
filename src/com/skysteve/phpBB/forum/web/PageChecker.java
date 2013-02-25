@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -91,6 +92,7 @@ public class PageChecker {
 					break;
 				}
 				
+				boolean sticky = isSticky(line);
 				int topicID = extractTopic(line);
 				String title = extractTitle(line);
 				
@@ -100,6 +102,7 @@ public class PageChecker {
 				}
 				
 				Date date = extractDate(line);
+				String user = extractUser(line);
 				Topic newTopic = new Topic(topicID, title, date);
 				Topic oldTopic = storageManager.getTopic(topicID);
 				
@@ -109,9 +112,22 @@ public class PageChecker {
 		    			logger.info("Found new topic " + title);
 		    		}
 					
-					String topicUrl = prefix + "viewtopic.php?t=" + topicID;
-					ForumMessage msg = new ForumMessage(config, topicUrl, title);
-					messages.add(msg);
+					//if the user is in the ignore list or the topic is in the ignore list, ignore it!
+					if (!config.getIgnore().getUsers().contains(user) && !config.getIgnore().getPosts().contains(topicID)
+							&& !(sticky && config.getIgnore().isStickyPosts())) {//also ignore if is a sticky post and we're ignoring sticky posts
+						String topicUrl = prefix + "viewtopic.php?t=" + topicID;
+						
+						HashMap<String, Object> mustacheScopes = new HashMap<String, Object>();
+						mustacheScopes.put("URL", topicUrl);
+						mustacheScopes.put("Title", title);
+						mustacheScopes.put("User", user);
+						mustacheScopes.put("LastPostDate", date);
+						mustacheScopes.put("Sticky", sticky);
+						//TODO author, views, replies, last reply (and/or unseen replies)
+						
+						ForumMessage msg = new ForumMessage(config, mustacheScopes);
+						messages.add(msg);
+					}
 				}
 				
 				storageManager.storeTopic(newTopic);
@@ -163,4 +179,29 @@ public class PageChecker {
 		name = name.substring(name.indexOf("topictitle")+12).trim();
 		return name.substring(0,name.indexOf("<")).trim();
 	}	
+	
+	private static String extractUser(String line) {
+		Pattern aTag = Pattern.compile("<a.*<\\/a>\\s");
+		Matcher aMatcher = aTag.matcher(line);
+		
+		if (aMatcher.find()) {
+			line = line.substring(aMatcher.start(), aMatcher.end());
+			
+			Pattern name = Pattern.compile(">([a-zA-Z0-9]*\\s*)*<");
+			Matcher nameMatcher = name.matcher(line);
+			
+			if (nameMatcher.find()) {
+				return line.substring(nameMatcher.start()+1, nameMatcher.end()-1).trim();
+			}
+		}
+		
+		
+		
+		return null;
+	}
+	
+	
+	private static boolean isSticky(String line) {
+		return line.contains("<b>Sticky:</b>");
+	}
 }

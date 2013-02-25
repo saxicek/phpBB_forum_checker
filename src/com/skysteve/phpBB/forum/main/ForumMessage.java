@@ -20,26 +20,13 @@ public class ForumMessage {
 	
 	private Config config;
 	private HashMap<String, Object> mustacheScopes;
-	
-	private String URL;
-	private String title;
-	
-	public ForumMessage (Config config, String url, String title) {
-		this.config = config;
-		this.URL = url;
-		this.title = title;
-		
-		mustacheScopes = new HashMap<String, Object>();
-		mustacheScopes.put("url", URL);
-		mustacheScopes.put("title", title);
-	}
-	
-	public String getUrl() {
-		return URL;
-	}
 
-	public String getTitle() {
-		return title;
+	
+	//TODO remove URL & Title, instead pass in a HashMap object
+	
+	public ForumMessage (Config config, HashMap<String, Object> mustacheScopes) {
+		this.config = config;
+		this.mustacheScopes = mustacheScopes;
 	}
 	
 	

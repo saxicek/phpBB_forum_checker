@@ -34,6 +34,11 @@ The config file is a JSON file as described below:
         "baseURL": "http://www.someForum.com/forum",
         "pageID": 24
     },
+    "ignore" : {
+	"users" : ["user1", "user2"],
+	"posts" : [21,22,23],
+	"stickyPosts" : true
+    },
     "mailFrom": {
         "address": "<username>@gmail.com",
 	"name" : "Flight Alert",
@@ -69,6 +74,8 @@ Available tags :
 
 The body attribute may be specified as EITHER a file path to a mustache file OR raw mustache
 
+Ignore: stickyPosts = true means the system WILL NOT alert for sticky posts, false means it will alert for sticky posts
+
 #### Example mustache file
 ```html
 <html>
@@ -83,12 +90,6 @@ The body attribute may be specified as EITHER a file path to a mustache file OR 
 * concat multiple topics into 1 message
 * allow/disable reply notifications
 * clear out old topics using maxTopics (this may change to a date)
-* ignore : {
-	users : ["user1", "user2"],
-	posts : [21,22,23],
-	stickyPosts : true
-}
-
 
 ### Dependencies
 * redis

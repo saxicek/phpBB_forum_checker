@@ -10,6 +10,7 @@ import org.json.simple.JSONValue;
 import com.skysteve.phpBB.forum.config.children.Alerts;
 import com.skysteve.phpBB.forum.config.children.Debug;
 import com.skysteve.phpBB.forum.config.children.Forum;
+import com.skysteve.phpBB.forum.config.children.Ignore;
 import com.skysteve.phpBB.forum.config.children.MailFrom;
 import com.skysteve.phpBB.forum.config.children.MailTo;
 import com.skysteve.phpBB.forum.config.children.Storage;
@@ -19,6 +20,7 @@ public class Config {
 	private Alerts alerts;
 	private Debug debug;
 	private Forum forum;
+	private Ignore ignore;
 	private MailFrom mailFrom;
 	private MailTo mailTo;
 	private Storage storage;
@@ -34,6 +36,7 @@ public class Config {
 		alerts = new Alerts((JSONObject) jsonObj.get("alerts"));
 		debug = new Debug((JSONObject) jsonObj.get("debug"));
 		forum = new Forum((JSONObject) jsonObj.get("forum"));
+		ignore = new Ignore((JSONObject) jsonObj.get("ignore"));
 		mailFrom = new MailFrom((JSONObject) jsonObj.get("mailFrom"));
 		mailTo = new MailTo((JSONObject) jsonObj.get("mailTo"));
 		storage = new Storage((JSONObject) jsonObj.get("storage"));
@@ -49,6 +52,10 @@ public class Config {
 
 	public Forum getForum() {
 		return forum;
+	}
+
+	public Ignore getIgnore() {
+		return ignore;
 	}
 
 	public MailFrom getMailFrom() {
