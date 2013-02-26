@@ -24,9 +24,9 @@ import com.skysteve.phpBB.forum.main.ForumMessage;
 import com.skysteve.phpBB.forum.redis.StorageManager;
 import com.skysteve.phpBB.forum.redis.Topic;
 
-public class PageChecker {
+public class ThreadChecker {
 	
-	private static Logger logger = Logger.getLogger(PageChecker.class.getName());
+	private static Logger logger = Logger.getLogger(ThreadChecker.class.getName());
 	
 	public static List<ForumMessage> checkPage (Config config, StorageManager storageManager) {
 		String prefix = config.getForum().getBaseURL(),
@@ -124,6 +124,10 @@ public class PageChecker {
 						mustacheScopes.put("LastPostDate", date);
 						mustacheScopes.put("Sticky", sticky);
 						//TODO author, views, replies, last reply (and/or unseen replies)
+						
+						if (config.getPosts().isDetails()) {
+							mustacheScopes.put("PostDetails",  PostReader.getPostDetails(config, topicUrl));
+						}
 						
 						ForumMessage msg = new ForumMessage(config, mustacheScopes);
 						messages.add(msg);

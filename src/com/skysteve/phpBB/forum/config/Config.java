@@ -13,6 +13,7 @@ import com.skysteve.phpBB.forum.config.children.Forum;
 import com.skysteve.phpBB.forum.config.children.Ignore;
 import com.skysteve.phpBB.forum.config.children.MailFrom;
 import com.skysteve.phpBB.forum.config.children.MailTo;
+import com.skysteve.phpBB.forum.config.children.Posts;
 import com.skysteve.phpBB.forum.config.children.Storage;
 
 public class Config {
@@ -23,6 +24,7 @@ public class Config {
 	private Ignore ignore;
 	private MailFrom mailFrom;
 	private MailTo mailTo;
+	private Posts posts;
 	private Storage storage;
 	
 	public Config(String filePath) throws FileNotFoundException {
@@ -39,6 +41,7 @@ public class Config {
 		ignore = new Ignore((JSONObject) jsonObj.get("ignore"));
 		mailFrom = new MailFrom((JSONObject) jsonObj.get("mailFrom"));
 		mailTo = new MailTo((JSONObject) jsonObj.get("mailTo"));
+		posts = new Posts((JSONObject) jsonObj.get("posts"));
 		storage = new Storage((JSONObject) jsonObj.get("storage"));
 	}
 
@@ -56,6 +59,10 @@ public class Config {
 
 	public Ignore getIgnore() {
 		return ignore;
+	}
+
+	public Posts getPosts() {
+		return posts;
 	}
 
 	public MailFrom getMailFrom() {

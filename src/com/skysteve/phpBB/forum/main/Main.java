@@ -11,7 +11,7 @@ import javax.mail.MessagingException;
 import com.skysteve.phpBB.forum.config.Config;
 import com.skysteve.phpBB.forum.redis.StorageManager;
 import com.skysteve.phpBB.forum.web.EmailClient;
-import com.skysteve.phpBB.forum.web.PageChecker;
+import com.skysteve.phpBB.forum.web.ThreadChecker;
 
 /**
  * @author Steve
@@ -28,7 +28,7 @@ public class Main {
 		Config config = new Config(args[0]);
 		StorageManager storageManager = new StorageManager(config);
 		
-		List<ForumMessage> messages = PageChecker.checkPage(config, storageManager);
+		List<ForumMessage> messages = ThreadChecker.checkPage(config, storageManager);
 				
 		if(messages.size() > 0 && config.getAlerts().isActive()) {
 			EmailClient mail = new EmailClient(config);
