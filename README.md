@@ -39,6 +39,14 @@ The config file is a JSON file as described below:
 	"posts" : [21,22,23],
 	"stickyPosts" : true
     },
+    "posts" : {
+	"details"  : true,
+	"original" : true,
+	"replies"  : {
+		"active" : true,
+		"extractDetails" : false
+	}
+    },
     "mailFrom": {
         "address": "<username>@gmail.com",
 	"name" : "Flight Alert",

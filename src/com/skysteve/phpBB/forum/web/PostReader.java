@@ -76,7 +76,7 @@ public class PostReader {
     		
     		String message = extractMessage(line);
     		
-    		while (!line.contains("</tr>")) {
+    		while (!(line=rd.readLine()).contains("</tr>")) {
     			message += line;
     		}
     		
