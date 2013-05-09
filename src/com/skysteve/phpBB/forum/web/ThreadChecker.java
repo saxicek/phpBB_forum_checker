@@ -1,5 +1,13 @@
 package com.skysteve.phpBB.forum.web;
 
+import com.skysteve.phpBB.forum.config.Config;
+import com.skysteve.phpBB.forum.main.ForumMessage;
+import com.skysteve.phpBB.forum.redis.StorageManager;
+import com.skysteve.phpBB.forum.redis.Topic;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,15 +22,6 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import com.skysteve.phpBB.forum.config.Config;
-import com.skysteve.phpBB.forum.main.ForumMessage;
-import com.skysteve.phpBB.forum.redis.StorageManager;
-import com.skysteve.phpBB.forum.redis.Topic;
 
 public class ThreadChecker {
 	
@@ -67,6 +66,7 @@ public class ThreadChecker {
         			}
         		} else {
         			outputFile = outputFile + "/" + config.getDebug().getDumpFileName() + ".html";
+                    logger.info("Logging to" + outputFile);
         		}
         		
         		
@@ -96,7 +96,7 @@ public class ThreadChecker {
 				int topicID = extractTopic(line);
 				String title = extractTitle(line);
 				
-				while(!line.contains("class=\"row3Right\"")) {
+				while(!line.contains("class=\"row3Right\"") && ! line.contains("p class=\"topicdetails\" style=\"white-space:")) {
 					line = rd.readLine();
 					fw.write(line + "\n\r");
 				}
@@ -168,11 +168,11 @@ public class ThreadChecker {
 	}
 
 	private static int extractTopic(String line) {
-		Pattern p = Pattern.compile("\\?t=\\d+");
+		Pattern p = Pattern.compile("t=\\d+");
 		Matcher m = p.matcher(line);
 		
 		if (m.find()) {
-			return Integer.parseInt(line.substring(m.start() + 3, m.end()));
+			return Integer.parseInt(line.substring(m.start() + 2, m.end()));
 		}
 		
 		return 0;
